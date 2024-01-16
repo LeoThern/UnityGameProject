@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         Vector2 movement = new Vector2(speed * horizontal, rb.velocity.y);
         rb.velocity = Vector2.Lerp(rb.velocity, movement, LerpConstant);
+        animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
     }
 
     private bool IsGrounded()
