@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
     private bool isFacingRight = true;
+    private bool onGround = false;
 
     [SerializeField] private float jumpingPower = 8f;
     [SerializeField] private float speed = 3f;
@@ -27,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
+        CheckOnGround();
         CheckJump();
         CheckFlip();
     }
@@ -44,6 +47,13 @@ public class PlayerMovement : MonoBehaviour
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
 
+    private void CheckOnGround()
+    {
+        bool newOnGround = IsGrounded();
+        if (newOnGround && !onGround) onLanding();
+        onGround = newOnGround;
+    }
+
     private void CheckFlip()
     {
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
@@ -57,14 +67,28 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckJump()
     {
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        if (Input.GetButtonDown("Jump") && onGround)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            animator.SetBool("IsJumping", true);
         }
 
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.7f);
         }
+
+        if (!onGround && rb.velocity.y < -0.01f)
+        {
+            print("is falling");
+            animator.SetBool("IsJumping", false);
+            animator.SetBool("IsFalling", true);
+        }
+    }
+
+    public void onLanding()
+    {
+        print("falling false");
+        animator.SetBool("IsFalling", false);
     }
 }
