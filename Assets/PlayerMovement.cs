@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     private bool isFacingRight = true;
     private bool onGround = false;
+    private bool doesWeakAttack = false;
+    private bool doesStrongAttack = false;
 
     [SerializeField] private float jumpingPower = 8f;
     [SerializeField] private float speed = 3f;
@@ -32,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
         CheckOnGround();
         CheckJump();
         CheckFlip();
+        CheckWeakAttack();
+
     }
 
     private void FixedUpdate()
@@ -80,15 +84,29 @@ public class PlayerMovement : MonoBehaviour
 
         if (!onGround && rb.velocity.y < -0.01f)
         {
-            print("is falling");
             animator.SetBool("IsJumping", false);
             animator.SetBool("IsFalling", true);
         }
     }
 
+    private void CheckWeakAttack()
+    {
+        bool isAttacking = doesWeakAttack || doesStrongAttack;
+
+        if (doesWeakAttack && !animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Idle_Weak_Attack"))
+        {
+            doesWeakAttack = false;
+            animator.SetBool("DoesWeakAttack", false);
+        }
+        if (!isAttacking && Input.GetButtonDown("Weak Attack"))
+        {
+            doesWeakAttack = true;
+            animator.SetBool("DoesWeakAttack", true);
+        }
+    }
+
     public void onLanding()
     {
-        print("falling false");
         animator.SetBool("IsFalling", false);
     }
 }
