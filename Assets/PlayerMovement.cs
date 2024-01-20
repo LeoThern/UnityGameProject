@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float jumpingPower = 8f;
     [SerializeField] private float speed = 3f;
-    [SerializeField][Range(0, 1)] float LerpConstant;
+    [SerializeField][Range(0, 1)] float lerpConstant;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         Vector2 movement = new Vector2(speed * horizontal, rb.velocity.y);
-        rb.velocity = Vector2.Lerp(rb.velocity, movement, LerpConstant);
+        rb.velocity = Vector2.Lerp(rb.velocity, movement, lerpConstant);
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
     }
 
@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
     private void CheckOnGround()
     {
         bool newOnGround = IsGrounded();
-        if (newOnGround && !onGround) onLanding();
+        if (newOnGround && !onGround) OnLanding();
         onGround = newOnGround;
     }
 
@@ -91,11 +91,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private bool DoesWeakAttackAnimation()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Idle_Weak_Attack")
+            || animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Running_Weak_Attack");
+    }
+
     private void CheckWeakAttack()
     {
         bool isAttacking = doesWeakAttack || doesStrongAttack;
 
-        if (doesWeakAttack && !animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Idle_Weak_Attack"))
+        if (doesWeakAttack && Input.GetButtonUp("Weak Attack"))
         {
             doesWeakAttack = false;
             animator.SetBool("DoesWeakAttack", false);
@@ -107,22 +113,28 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void onLanding()
+    public void OnLanding()
     {
         animator.SetBool("IsFalling", false);
     }
 
+    private bool DoesEvadeAnimation()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsName("Running_Evade")
+            || animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Evade_Standing");
+    }
+
     private void CheckEvade()
     {
-        if (playerDoesEvade && (!animator.GetCurrentAnimatorStateInfo(0).IsName("Running_Evade") || !animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Evade_Standing")))
+        if (playerDoesEvade && !DoesEvadeAnimation())
         {
             playerDoesEvade = false;
-            animator.SetBool("isEvading", false);
+            animator.SetBool("IsEvading", false);
         }
 
         if (Input.GetButtonDown("Dodge") && onGround){
             playerDoesEvade = true;
-            animator.SetBool("isEvading", true);
+            animator.SetBool("IsEvading", true);
             
         }
     }
