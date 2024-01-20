@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private bool onGround = false;
     private bool doesWeakAttack = false;
     private bool doesStrongAttack = false;
+    private bool playerDoesEvade = false;
 
     [SerializeField] private float jumpingPower = 8f;
     [SerializeField] private float speed = 3f;
@@ -35,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
         CheckJump();
         CheckFlip();
         CheckWeakAttack();
+        CheckEvade();
 
     }
 
@@ -108,5 +110,20 @@ public class PlayerMovement : MonoBehaviour
     public void onLanding()
     {
         animator.SetBool("IsFalling", false);
+    }
+
+    private void CheckEvade()
+    {
+        if (playerDoesEvade && (!animator.GetCurrentAnimatorStateInfo(0).IsName("Running_Evade") || !animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Evade_Standing")))
+        {
+            playerDoesEvade = false;
+            animator.SetBool("isEvading", false);
+        }
+
+        if (Input.GetButtonDown("Dodge") && onGround){
+            playerDoesEvade = true;
+            animator.SetBool("isEvading", true);
+            
+        }
     }
 }
