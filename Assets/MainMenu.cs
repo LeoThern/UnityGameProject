@@ -7,23 +7,24 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync("Stage1");
     }
 
 
-    public void openOptions()
-    {
-
-    }
+    
 
     public void openCredits()
     {
-
+        SceneManager.LoadSceneAsync("Credits");
     }
 
     public void quitGame()
     {
         Application.Quit();
     }
-  
+ 
+    public void quitCredits()
+    {
+        SceneManager.LoadSceneAsync("MainMenu");
+    }
 }
