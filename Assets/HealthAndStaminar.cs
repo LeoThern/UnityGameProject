@@ -18,9 +18,7 @@ public class Health : MonoBehaviour
     public float maxStamina;
 
     public Slider staminaBar;
-    public float dValue;
 
-    private float getNextStamina = 0.0f;
     public float getStamina = 1.0f;
 
     private void Start()
@@ -34,7 +32,7 @@ public class Health : MonoBehaviour
         displayStamina();
         if(stamina < maxStamina)
         {
-        stamina += dValue * Time.deltaTime;
+        stamina += getStamina * Time.deltaTime;
         }
     }
 
