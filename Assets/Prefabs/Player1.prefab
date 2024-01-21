@@ -918,12 +918,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6220842143789369620, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+      propertyPath: playerId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6220842143789369620, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
       propertyPath: groundCheck
       value: 
       objectReference: {fileID: 5201479595936698637}
     - target: {fileID: 8346534007947542514, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
       propertyPath: health
-      value: 6
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346534007947542514, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+      propertyPath: playerId
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8346534007947542514, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
       propertyPath: fullHeart

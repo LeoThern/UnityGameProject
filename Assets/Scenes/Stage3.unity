@@ -3373,6 +3373,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentScene: 0
   test: 0
+  scoreFirstPlayer: 0
+  scoreSecondPlayer: 0
 --- !u!1 &1872470712
 GameObject:
   m_ObjectHideFlags: 0

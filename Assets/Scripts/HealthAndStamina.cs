@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using UnityEngine.UI;
 
 public class HealthAndStamina : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public int playerId;
+    public MainMenu mainMenu;
     public float health;
     public int numOfHearts;
 
@@ -21,9 +23,12 @@ public class HealthAndStamina : MonoBehaviour
 
     public float getStamina = 5.0f;
 
+    public int test;
+
     private void Start()
     {
         stamina = maxStamina;
+        health = numOfHearts;
         staminaBar.maxValue = maxStamina;
     }
     void Update()
@@ -34,6 +39,12 @@ public class HealthAndStamina : MonoBehaviour
         {
         stamina += getStamina * Time.deltaTime;
         }
+        if (test > 3)
+        {
+            decreaseHealth(0.5f);
+            test = 0;
+        }
+        
     }
 
    void displayHealth()
@@ -91,5 +102,21 @@ public class HealthAndStamina : MonoBehaviour
             stamina -= stamina;  
     }
 
+    public void decreaseHealth(float damage)
+    {
+        health -= damage;
+        checkDead();
+    }
 
+    public void checkDead()
+    {
+        if(health <= 0)
+        {
+            mainMenu.increaseScore(playerId);
+            mainMenu.switchScene();
+        }
+ 
+    }
+
+    
 }
