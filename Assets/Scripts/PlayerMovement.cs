@@ -46,6 +46,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator animator;
 
+    [SerializeField] private CircleCollider2D enemyHitbox;
+    [SerializeField] private BoxCollider2D enemyHurtbox;
+    [SerializeField] private CircleCollider2D ownHitbox;
+    [SerializeField] private BoxCollider2D ownHurtbox;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
         CheckEvade();
         CheckWeakAttack();
         CheckStrongAttack();
+        CheckHit();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -215,6 +221,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.velocity = rb.velocity = new Vector2(dodgeAcceleration * HorizontalDirection(), 0f);
             }
+        }
+    }
+
+    private void CheckHit()
+    {
+        if (ownHurtbox.IsTouching(enemyHitbox))
+        {
+
         }
     }
 
