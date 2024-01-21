@@ -127,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (FellDown())
         {
-            healthAndStamina.decreaseHealth(6);
+            healthAndStamina.decreaseHealth(6f);
         }
     }
 
