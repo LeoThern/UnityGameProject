@@ -15,27 +15,26 @@ public class Health : MonoBehaviour
     public Sprite emptyHeart;
 
     public float stamina;
-    public int numOfPotions;
+    public float maxStamina;
 
-    public Image[] potions;
-    public Sprite fullPotion;
-    public Sprite halfPotion;
-    public Sprite emptyPotion;
+    public Slider staminaBar;
+    public float dValue;
 
     private float getNextStamina = 0.0f;
     public float getStamina = 1.0f;
 
+    private void Start()
+    {
+        stamina = maxStamina;
+        staminaBar.maxValue = maxStamina;
+    }
     void Update()
     {
         displayHealth();
         displayStamina();
-        if(Time.time > getNextStamina)
+        if(stamina < maxStamina)
         {
-            getNextStamina += getStamina;
-            if(stamina < numOfPotions - 1)
-            {
-                stamina++;
-            }
+        stamina += dValue * Time.deltaTime;
         }
     }
 
@@ -77,38 +76,7 @@ public class Health : MonoBehaviour
 
     void displayStamina()
     {
-        if (stamina > numOfPotions)
-        {
-            stamina = numOfPotions;
-        }
-        for (int i = 0; i < potions.Length; i++)
-        {
-            if (i < stamina)
-            {
-                if (i == stamina - 0.5f)
-                {
-                    potions[i].sprite = halfPotion;
-                }
-                else
-                {
-                    potions[i].sprite = fullPotion;
-                }
-
-            }
-            else
-            {
-                potions[i].sprite = emptyPotion;
-            }
-
-            if (i < numOfPotions)
-            {
-                potions[i].enabled = true;
-            }
-            else
-            {
-                potions[i].enabled = false;
-            }
-        }
+        staminaBar.value = stamina;
     }
 
  
