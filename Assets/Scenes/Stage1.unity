@@ -974,6 +974,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d7890297f642e47b562d5240ad3ee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthAndStamina: {fileID: 595704597}
+  playerId: 0
   jumpingPower: 8
   speed: 3.5
   lerpConstant: 1
@@ -1016,8 +1018,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc11e6b722ebf54f956840f6b9d6afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  numOfHearts: 0
+  health: 6
+  numOfHearts: 6
   hearts:
   - {fileID: 898646512}
   - {fileID: 586014397}
@@ -1028,11 +1030,10 @@ MonoBehaviour:
   fullHeart: {fileID: 21300000, guid: c35686590b43c4347b8eca6e9b22a2c4, type: 3}
   halfHeart: {fileID: 21300000, guid: abebe07d74d25f74fa8ea2f7541c7bae, type: 3}
   emptyHeart: {fileID: 21300000, guid: 182bc51b1edcd1b46bf3c98d34000c74, type: 3}
-  stamina: 10
+  stamina: 100
   maxStamina: 100
   staminaBar: {fileID: 1820352756}
-  dValue: 0.01
-  getStamina: 1
+  getStamina: 5
 --- !u!1 &659963378
 GameObject:
   m_ObjectHideFlags: 0
