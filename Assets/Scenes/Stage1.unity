@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 123370025}
   - component: {fileID: 123370027}
   - component: {fileID: 123370026}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -908,24 +908,24 @@ MonoBehaviour:
   health: 0
   numOfHearts: 0
   hearts:
-  - {fileID: 1686037477}
+  - {fileID: 0}
   - {fileID: 586014397}
-  - {fileID: 1280992952}
+  - {fileID: 0}
   - {fileID: 1562640096}
-  - {fileID: 405733675}
-  - {fileID: 253261396}
+  - {fileID: 0}
+  - {fileID: 0}
   fullHeart: {fileID: 21300000, guid: 4887ed399b7b575468ae320f5b70324c, type: 3}
   halfHeart: {fileID: 21300000, guid: c9e9007ec1051504899c0308072c20dd, type: 3}
   emptyHeart: {fileID: 21300000, guid: 182bc51b1edcd1b46bf3c98d34000c74, type: 3}
   stamina: 0
   numOfPotions: 0
   potions:
-  - {fileID: 474952791}
-  - {fileID: 1092837959}
-  - {fileID: 957718927}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 595148767}
   - {fileID: 604977117}
-  - {fileID: 337480290}
+  - {fileID: 0}
   fullPotion: {fileID: 21300000, guid: a6f8f00e533a38145b7ce241c227d2bc, type: 3}
   halfPotion: {fileID: 21300000, guid: 67538d1893a3c8c42bae7a98a3332bf4, type: 3}
   emptyPotion: {fileID: 21300000, guid: 16a12ea0fdcb552469d08081c43badbb, type: 3}
@@ -1099,18 +1099,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1280992951}
   - {fileID: 1562640095}
-  - {fileID: 405733674}
-  - {fileID: 253261395}
   - {fileID: 586014396}
-  - {fileID: 1686037476}
-  - {fileID: 474952790}
-  - {fileID: 1092837958}
-  - {fileID: 957718926}
   - {fileID: 595148766}
   - {fileID: 604977116}
-  - {fileID: 337480289}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1666,7 +1658,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1242100484}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1702,7 +1694,7 @@ GameObject:
   - component: {fileID: 1356374391}
   - component: {fileID: 1356374393}
   - component: {fileID: 1356374392}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spike (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1805,7 +1797,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -4893,7 +4885,7 @@ GameObject:
   - component: {fileID: 2130045874}
   - component: {fileID: 2130045876}
   - component: {fileID: 2130045875}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spike (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4996,7 +4988,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -5097,4 +5089,3 @@ SceneRoots:
   - {fileID: 1673340379}
   - {fileID: 595704594}
   - {fileID: 659963382}
-  - {fileID: 1756417336}
