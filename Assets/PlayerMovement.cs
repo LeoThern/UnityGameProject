@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
     private bool isFacingRight = true;
-    private bool isJumping = false;
     private bool onGround = false;
     private bool doesWeakAttack = false;
     private bool doesStrongAttack = false;
@@ -75,11 +74,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckJump()
     {
-        if (doesStrongAttack) return;
+        if (doesStrongAttack || doesEvade) return;
         if (Input.GetButtonDown("Jump") && onGround)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-            isJumping = true;
             animator.SetBool("IsJumping", true);
         }
 
@@ -95,12 +93,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool DoesWeakAttackAnimation()
-    {
-        return animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Idle_Weak_Attack")
-            || animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Running_Weak_Attack");
-    }
-
     private void CheckWeakAttack()
     {
         bool isAttacking = doesWeakAttack || doesStrongAttack;
@@ -110,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
             doesWeakAttack = false;
             animator.SetBool("DoesWeakAttack", false);
         }
-        if (onGround && !isAttacking && Input.GetButtonDown("Weak Attack"))
+        if (onGround && !isAttacking && !doesEvade && Input.GetButtonDown("Weak Attack"))
         {
             doesWeakAttack = true;
             animator.SetBool("DoesWeakAttack", true);
@@ -119,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckStrongAttack()
     {
-        if (onGround && !doesStrongAttack && Input.GetButtonDown("Strong Attack"))
+        if (onGround && !doesEvade && !doesStrongAttack && Input.GetButtonDown("Strong Attack"))
         {
             doesStrongAttack = true;
             animator.SetBool("DoesStrongAttack", true);
@@ -128,9 +120,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnStrongAttackFinished()
     {
+        rb.position += new Vector2(HorizontalDirection() * 0.3f, 0f);
         doesStrongAttack = false;
         animator.SetBool("DoesStrongAttack", false);
-        rb.position += new Vector2(HorizontalDirection() * 0.3f, 0f);
     }
 
     public void OnLanding()
@@ -142,9 +134,10 @@ public class PlayerMovement : MonoBehaviour
     private void CheckEvade()
     {
         if (onGround && !doesEvade && Input.GetButtonDown("Dodge")){
+            print("dodge");
             doesEvade = true;
             animator.SetBool("IsEvading", true);
-            
+            rb.position -= new Vector2(HorizontalDirection() * 1f, 0f);
         }
     }
 
