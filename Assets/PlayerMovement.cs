@@ -8,13 +8,13 @@ public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
     private bool isFacingRight = true;
+    private bool jumpPressed = false;
     private bool onGround = false;
     private bool doesWeakAttack = false;
     private bool doesStrongAttack = false;
     private bool doesEvade = false;
     private Vector2 movementInput = Vector2.zero;
 
-    [SerializeField] public bool playerId = false;
     [SerializeField] private float jumpingPower = 8f;
     [SerializeField] private float speed = 3f;
     [SerializeField][Range(0, 1)] float lerpConstant;
@@ -45,6 +45,10 @@ public class PlayerMovement : MonoBehaviour
     {
         movementInput = context.ReadValue<Vector2>();
         horizontal = movementInput.x;
+    }
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        jumpPressed = context.action.triggered;
     }
 
     private void FixedUpdate()
@@ -81,14 +85,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckJump()
     {
-        if (doesStrongAttack || doesEvade) return;
-        if (Input.GetButtonDown("Jump") && onGround)
+        if (doesStrongAttack) return;
+        if (jumpPressed && onGround)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             animator.SetBool("IsJumping", true);
         }
 
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+        if (!jumpPressed && rb.velocity.y > 0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.7f);
         }
