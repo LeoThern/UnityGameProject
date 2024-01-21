@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask deathLayer;
     [SerializeField] private Animator animator;
 
     [SerializeField] private CircleCollider2D enemyHitbox;
@@ -60,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckFellDown();
         CheckOnGround();
         CheckJump();
         CheckFlip();
@@ -109,6 +111,19 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    private bool FellDown()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, deathLayer);
+    }
+
+    private void CheckFellDown()
+    {
+        if (FellDown())
+        {
+            healthAndStamina.decreaseHealth(6);
+        }
     }
 
     private void CheckOnGround()
