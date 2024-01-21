@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private bool doesStrongAttack = false;
     private bool doesEvade = false;
 
+    [SerializeField] public bool playerId = false;
     [SerializeField] private float jumpingPower = 8f;
     [SerializeField] private float speed = 3f;
     [SerializeField][Range(0, 1)] float lerpConstant;
