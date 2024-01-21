@@ -412,6 +412,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  deathLayer:
+    serializedVersion: 2
+    m_Bits: 128
   animator: {fileID: 3919259862840079859}
   enemyHitbox: {fileID: 0}
   enemyHurtbox: {fileID: 0}
