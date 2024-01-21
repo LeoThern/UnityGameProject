@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 movementInput = Vector2.zero;
     private float jumpTime = 0f;
 
+    public float invisibilityTimer = 0f;
+
+    private Vector2 hitImpulse = new Vector2(50f, 3f);
+
     public HealthAndStamina healthAndStamina;
     /**
      * Usage:
@@ -40,8 +44,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dodgeAcceleration = 4f;
     [SerializeField] private float speed = 3f;
     [SerializeField][Range(0, 1)] float lerpConstant;
+    [SerializeField] private float hitInvisibility = 1f;
 
-    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] public Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask deathLayer;
@@ -241,10 +246,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckHit()
     {
-
-        if (IsAttacking() && !enemyMovement.IsDodging() && enemyHitbox.IsTouching(ownHitbox))
+        if (invisibilityTimer > 0)
         {
-            print("hit!");
+            invisibilityTimer -= Time.deltaTime;
+        }
+
+        if (IsAttacking() && !enemyMovement.IsInvisible() && enemyHitbox.IsTouching(ownHitbox))
+        {
+            float direction = rb.position.x < enemyMovement.GetPosition().x ? 1f : -1f;
+            float attackMultiplier = doesStrongAttack ? 1f : 0.5f;
+            enemyMovement.rb.AddForce(new Vector2(direction * hitImpulse.x * attackMultiplier,
+                hitImpulse.y * attackMultiplier), ForceMode2D.Impulse);
+            enemyMovement.invisibilityTimer = hitInvisibility;
+            enemyMovement.DecreaseHealth(attackMultiplier);
         }
     }
 
@@ -259,8 +273,18 @@ public class PlayerMovement : MonoBehaviour
         return doesWeakAttack || doesStrongAttack;
     }
 
-    public bool IsDodging()
+    public bool IsInvisible()
     {
-        return doesEvade;
+        return doesEvade || invisibilityTimer > 0;
+    }
+
+    public Vector2 GetPosition()
+    {
+        return rb.position;
+    }
+
+    public void DecreaseHealth(float health)
+    {
+        healthAndStamina.decreaseHealth(health);
     }
 }
