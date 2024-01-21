@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private bool onGround = false;
     private bool doesWeakAttack = false;
     private bool doesStrongAttack = false;
-    private bool playerDoesEvade = false;
+    private bool doesEvade = false;
 
     [SerializeField] private float jumpingPower = 8f;
     [SerializeField] private float speed = 3f;
@@ -35,14 +35,14 @@ public class PlayerMovement : MonoBehaviour
         CheckOnGround();
         CheckJump();
         CheckFlip();
-        CheckWeakAttack();
         CheckEvade();
-
+        CheckWeakAttack();
+        CheckStrongAttack();
     }
 
     private void FixedUpdate()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
+        horizontal = doesStrongAttack ? 0f : Input.GetAxisRaw("Horizontal");
         Vector2 movement = new Vector2(speed * horizontal, rb.velocity.y);
         rb.velocity = Vector2.Lerp(rb.velocity, movement, lerpConstant);
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
@@ -62,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckFlip()
     {
+        if (doesStrongAttack) return;
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
@@ -73,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckJump()
     {
+        if (doesStrongAttack) return;
         if (Input.GetButtonDown("Jump") && onGround)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
@@ -106,11 +108,27 @@ public class PlayerMovement : MonoBehaviour
             doesWeakAttack = false;
             animator.SetBool("DoesWeakAttack", false);
         }
-        if (!isAttacking && Input.GetButtonDown("Weak Attack"))
+        if (onGround && !isAttacking && Input.GetButtonDown("Weak Attack"))
         {
             doesWeakAttack = true;
             animator.SetBool("DoesWeakAttack", true);
         }
+    }
+
+    private void CheckStrongAttack()
+    {
+        if (onGround && !doesStrongAttack && Input.GetButtonDown("Strong Attack"))
+        {
+            doesStrongAttack = true;
+            animator.SetBool("DoesStrongAttack", true);
+        }
+    }
+
+    public void OnStrongAttackFinished()
+    {
+        doesStrongAttack = false;
+        animator.SetBool("DoesStrongAttack", false);
+        rb.position += new Vector2(HorizontalDirection() * 0.3f, 0f);
     }
 
     public void OnLanding()
@@ -118,24 +136,23 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("IsFalling", false);
     }
 
-    private bool DoesEvadeAnimation()
-    {
-        return animator.GetCurrentAnimatorStateInfo(0).IsName("Running_Evade")
-            || animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Evade_Standing");
-    }
-
     private void CheckEvade()
     {
-        if (playerDoesEvade && !DoesEvadeAnimation())
-        {
-            playerDoesEvade = false;
-            animator.SetBool("IsEvading", false);
-        }
-
-        if (Input.GetButtonDown("Dodge") && onGround){
-            playerDoesEvade = true;
+        if (onGround && !doesEvade && Input.GetButtonDown("Dodge")){
+            doesEvade = true;
             animator.SetBool("IsEvading", true);
             
         }
+    }
+
+    public void OnEvadeFinished()
+    {
+        doesEvade = false;
+        animator.SetBool("IsEvading", false);
+    }
+
+    private float HorizontalDirection()
+    {
+        return isFacingRight ? 1f : -1f;
     }
 }
