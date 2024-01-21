@@ -318,6 +318,11 @@ CircleCollider2D:
   m_CorrespondingSourceObject: {fileID: 6945070292998349648, guid: 9701fac66f1a8b34c9f95554b4d81a2d, type: 3}
   m_PrefabInstance: {fileID: 585578227}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &463653608 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5728745619341350444, guid: 60940207190fca8448c47b90d04d4063, type: 3}
+  m_PrefabInstance: {fileID: 1196474533}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &507857924 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4254386802218316366, guid: 60940207190fca8448c47b90d04d4063, type: 3}
@@ -1551,6 +1556,10 @@ PrefabInstance:
       propertyPath: enemyHitbox
       value: 
       objectReference: {fileID: 407888267}
+    - target: {fileID: 4254386802218316366, guid: 60940207190fca8448c47b90d04d4063, type: 3}
+      propertyPath: groundCheck
+      value: 
+      objectReference: {fileID: 463653608}
     - target: {fileID: 4254386802218316366, guid: 60940207190fca8448c47b90d04d4063, type: 3}
       propertyPath: enemyHurtbox
       value: 

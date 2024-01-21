@@ -399,7 +399,7 @@ MonoBehaviour:
   weakAttackTimerDecrease: 0.2
   healthAndStamina: {fileID: 8346534007947542514}
   evadeCost: 20
-  weakAttackCost: 3
+  weakAttackCost: 5
   strongAttackCost: 30
   playerId: 0
   jumpingPower: 8
@@ -462,8 +462,8 @@ MonoBehaviour:
   fullHeart: {fileID: 0}
   halfHeart: {fileID: 0}
   emptyHeart: {fileID: 0}
-  stamina: 100
-  maxStamina: 100
+  stamina: 70
+  maxStamina: 70
   staminaBar: {fileID: 0}
   getStamina: 5
   test: 0

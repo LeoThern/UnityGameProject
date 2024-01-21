@@ -932,7 +932,7 @@ PrefabInstance:
     - target: {fileID: 6220842143789369620, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
       propertyPath: groundCheck
       value: 
-      objectReference: {fileID: 5201479595936698637}
+      objectReference: {fileID: 5728745619341350444}
     - target: {fileID: 6720152135242494412, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
       propertyPath: m_Color.b
       value: 0.08627451
@@ -950,6 +950,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8346534007947542514, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+      propertyPath: stamina
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346534007947542514, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
       propertyPath: playerId
       value: 1
       objectReference: {fileID: 0}
@@ -965,6 +969,10 @@ PrefabInstance:
       propertyPath: emptyHeart
       value: 
       objectReference: {fileID: 21300000, guid: 182bc51b1edcd1b46bf3c98d34000c74, type: 3}
+    - target: {fileID: 8346534007947542514, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+      propertyPath: maxStamina
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 8346534007947542514, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
       propertyPath: staminaBar
       value: 
@@ -1026,5 +1034,10 @@ CircleCollider2D:
 --- !u!4 &5201479595936698637 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2697971305746180695, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+  m_PrefabInstance: {fileID: 7880807565201603418}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5728745619341350444 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2512682518330207606, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
   m_PrefabInstance: {fileID: 7880807565201603418}
   m_PrefabAsset: {fileID: 0}
