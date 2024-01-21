@@ -62,6 +62,11 @@ public class PlayerMovement : MonoBehaviour
         horizontal = movementInput.x;
     }
 
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        jumpPressed = context.action.triggered;
+    }
+
     private void FixedUpdate()
     {
         horizontal = doesStrongAttack ? 0f : horizontal;
