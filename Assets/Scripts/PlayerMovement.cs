@@ -22,8 +22,11 @@ public class PlayerMovement : MonoBehaviour
     private float jumpTime = 0f;
 
     public float invisibilityTimer = 0f;
+    private float weakAttackTimer = 0f;
+    public float weakAttackTimerDecrease = 0.2f;
+    private float lerpConstant = 0.5f;
 
-    private Vector2 hitImpulse = new Vector2(50f, 3f);
+    private Vector2 hitImpulse = new Vector2(80f, 3f);
 
     public HealthAndStamina healthAndStamina;
     /**
@@ -41,9 +44,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public bool playerId = false;
     [SerializeField] private float jumpingPower = 8f;
     [SerializeField] private float minJumpTime = 1f;
-    [SerializeField] private float dodgeAcceleration = 4f;
+    [SerializeField] private float dodgeAcceleration = 200f;
     [SerializeField] private float speed = 3f;
-    [SerializeField][Range(0, 1)] float lerpConstant;
     [SerializeField] private float hitInvisibility = 1f;
 
     [SerializeField] public Rigidbody2D rb;
@@ -189,31 +191,40 @@ public class PlayerMovement : MonoBehaviour
         return isFacingRight ? 1f : -1f;
     }
 
-    private bool DoesWeakAttackAnimation()
-    {
-        return animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Idle_Weak_Attack")
-            || animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Running_Weak_Attack");
-    }
-
     private void CheckWeakAttack()
     {
         bool isAttacking = doesWeakAttack || doesStrongAttack;
+
+        if (doesWeakAttack)
+        {
+            if (weakAttackTimer > 0f)
+            {
+                weakAttackTimer -= Time.deltaTime;
+            } else
+            {
+                healthAndStamina.consumeStamina(weakAttackCost);
+                weakAttackTimer = weakAttackTimerDecrease;
+            }
+        }
 
         if (doesWeakAttack && !weakAttackPressed)
         {
             doesWeakAttack = false;
             animator.SetBool("DoesWeakAttack", false);
+            weakAttackTimer = weakAttackTimerDecrease;
         }
         if (onGround && !isAttacking && !doesEvade && weakAttackPressed)
         {
             doesWeakAttack = true;
             animator.SetBool("DoesWeakAttack", true);
+            weakAttackTimer = weakAttackTimerDecrease;
+            healthAndStamina.consumeStamina(weakAttackCost);
         }
     }
 
     private void CheckStrongAttack()
     {
-        if (onGround && !doesEvade && !doesStrongAttack && strongAttackPressed)
+        if (onGround && !doesEvade && !doesStrongAttack && strongAttackPressed && healthAndStamina.checkAndConsumeStamina(strongAttackCost))
         {
             doesStrongAttack = true;
             animator.SetBool("DoesStrongAttack", true);
@@ -239,7 +250,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.position -= new Vector2(HorizontalDirection() * 1f, 0f);
             } else  // player is running
             {
-                rb.velocity = rb.velocity = new Vector2(dodgeAcceleration * HorizontalDirection(), 0f);
+                rb.AddForce(new Vector2(dodgeAcceleration * HorizontalDirection(), 0f), ForceMode2D.Impulse);
             }
         }
     }
@@ -255,7 +266,7 @@ public class PlayerMovement : MonoBehaviour
         {
             float direction = rb.position.x < enemyMovement.GetPosition().x ? 1f : -1f;
             float attackMultiplier = doesStrongAttack ? 1f : 0.5f;
-            enemyMovement.rb.AddForce(new Vector2(direction * hitImpulse.x * attackMultiplier,
+            enemyMovement.rb.AddForce(new Vector2(direction * hitImpulse.x,
                 hitImpulse.y * attackMultiplier), ForceMode2D.Impulse);
             enemyMovement.invisibilityTimer = hitInvisibility;
             enemyMovement.DecreaseHealth(attackMultiplier);

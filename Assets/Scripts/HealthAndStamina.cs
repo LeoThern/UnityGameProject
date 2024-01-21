@@ -97,9 +97,9 @@ public class HealthAndStamina : MonoBehaviour
         }
         return false;
     }
-    public void consumeStamina(float stamina)
+    public void consumeStamina(float toConsume)
     {
-            stamina -= stamina;  
+            stamina -= toConsume;  
     }
 
     public void decreaseHealth(float damage)

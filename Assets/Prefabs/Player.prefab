@@ -396,16 +396,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   invisibilityTimer: 0
+  weakAttackTimerDecrease: 0.2
   healthAndStamina: {fileID: 8346534007947542514}
   evadeCost: 20
   weakAttackCost: 3
-  strongAttackCost: 40
+  strongAttackCost: 30
   playerId: 0
   jumpingPower: 8
   minJumpTime: 0.05
   dodgeAcceleration: 4
   speed: 3.5
-  lerpConstant: 0.5
   hitInvisibility: 1
   rb: {fileID: 130915162460073454}
   groundCheck: {fileID: 2512682518330207606}
