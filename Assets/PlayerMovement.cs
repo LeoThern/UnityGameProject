@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,7 +12,9 @@ public class PlayerMovement : MonoBehaviour
     private bool doesWeakAttack = false;
     private bool doesStrongAttack = false;
     private bool doesEvade = false;
+    private Vector2 movementInput = Vector2.zero;
 
+    [SerializeField] public bool playerId = false;
     [SerializeField] private float jumpingPower = 8f;
     [SerializeField] private float speed = 3f;
     [SerializeField][Range(0, 1)] float lerpConstant;
@@ -30,8 +33,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
-
         CheckOnGround();
         CheckJump();
         CheckFlip();
@@ -40,9 +41,15 @@ public class PlayerMovement : MonoBehaviour
         CheckStrongAttack();
     }
 
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        movementInput = context.ReadValue<Vector2>();
+        horizontal = movementInput.x;
+    }
+
     private void FixedUpdate()
     {
-        horizontal = doesStrongAttack ? 0f : Input.GetAxisRaw("Horizontal");
+        horizontal = doesStrongAttack ? 0f : horizontal;
         Vector2 movement = new Vector2(speed * horizontal, rb.velocity.y);
         rb.velocity = Vector2.Lerp(rb.velocity, movement, lerpConstant);
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
