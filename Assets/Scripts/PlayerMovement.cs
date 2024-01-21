@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private bool doesStrongAttack = false;
     private bool doesEvade = false;
     private Vector2 movementInput = Vector2.zero;
+    private float jumpTime = 0f;
 
     public HealthAndStamina healthAndStamina;
     /**
@@ -35,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] public bool playerId = false;
     [SerializeField] private float jumpingPower = 8f;
+    [SerializeField] private float minJumpTime = 1f;
+    [SerializeField] private float dodgeAcceleration = 4f;
     [SerializeField] private float speed = 3f;
     [SerializeField][Range(0, 1)] float lerpConstant;
 
@@ -91,8 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        horizontal = movementInput.x;
-        horizontal = doesStrongAttack ? 0f : horizontal;
+        horizontal = doesStrongAttack ? 0f : movementInput.x;
         Vector2 movement = new Vector2(speed * horizontal, rb.velocity.y);
         rb.velocity = Vector2.Lerp(rb.velocity, movement, lerpConstant);
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
@@ -106,25 +108,32 @@ public class PlayerMovement : MonoBehaviour
     private void CheckOnGround()
     {
         bool newOnGround = IsGrounded();
-        if (newOnGround && !onGround) OnLanding();
+        if (newOnGround && !onGround && rb.velocity.y < 0.01f) OnLanding();
         onGround = newOnGround;
     }
 
     private void CheckJump()
     {
         if (doesStrongAttack) return;
-        if (jumpPressed && onGround)
+        if (jumpPressed && onGround && rb.velocity.y < 0.01f)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            jumpTime = 0f;
             animator.SetBool("IsJumping", true);
         }
 
-        if (!jumpPressed && rb.velocity.y > 0f)
+        if (jumpPressed)
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.7f);
+            jumpTime += Time.deltaTime;
         }
 
-        if (!onGround && rb.velocity.y < 0f)
+        // check for slow down
+        if (!jumpPressed && rb.velocity.y > 0f && jumpTime >= minJumpTime)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.75f * Time.deltaTime);
+        }
+
+        if (!onGround && rb.velocity.y < 0.01f)
         {
             animator.SetBool("IsJumping", false);
             animator.SetBool("IsFalling", true);
@@ -194,12 +203,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckEvade()
     {
-        if (onGround && !doesEvade && dodgePressed && healthAndStamina.checkAndConsumeStamina(evadeCost))
+        if (dodgePressed && onGround && !doesEvade && healthAndStamina.checkAndConsumeStamina(evadeCost))
         {
-            print("dodge");
             doesEvade = true;
             animator.SetBool("IsEvading", true);
-            rb.position -= new Vector2(HorizontalDirection() * 1f, 0f);
+
+            if (Mathf.Abs(rb.velocity.x) < 0.01) // player is idle
+            {
+                rb.position -= new Vector2(HorizontalDirection() * 1f, 0f);
+            } else  // player is running
+            {
+                rb.velocity = rb.velocity = new Vector2(dodgeAcceleration * HorizontalDirection(), 0f);
+            }
         }
     }
 

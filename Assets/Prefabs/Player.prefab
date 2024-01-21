@@ -322,6 +322,8 @@ MonoBehaviour:
   strongAttackCost: 40
   playerId: 0
   jumpingPower: 8
+  minJumpTime: 0.05
+  dodgeAcceleration: 4
   speed: 3.5
   lerpConstant: 1
   rb: {fileID: 130915162460073454}
