@@ -395,8 +395,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49d7890297f642e47b562d5240ad3ee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invisibilityTimer: 0
   healthAndStamina: {fileID: 8346534007947542514}
-  evadeCost: 10
+  evadeCost: 20
   weakAttackCost: 3
   strongAttackCost: 40
   playerId: 0
@@ -404,7 +405,8 @@ MonoBehaviour:
   minJumpTime: 0.05
   dodgeAcceleration: 4
   speed: 3.5
-  lerpConstant: 1
+  lerpConstant: 0.5
+  hitInvisibility: 1
   rb: {fileID: 130915162460073454}
   groundCheck: {fileID: 2512682518330207606}
   groundLayer:
@@ -415,6 +417,7 @@ MonoBehaviour:
   enemyHurtbox: {fileID: 0}
   ownHitbox: {fileID: 0}
   ownHurtbox: {fileID: 0}
+  enemyMovement: {fileID: 0}
 --- !u!95 &3919259862840079859
 Animator:
   serializedVersion: 5
