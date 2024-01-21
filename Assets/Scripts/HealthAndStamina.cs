@@ -39,12 +39,8 @@ public class HealthAndStamina : MonoBehaviour
         {
         stamina += getStamina * Time.deltaTime;
         }
-        if (test > 3)
-        {
-            decreaseHealth(0.5f);
-            test = 0;
-        }
         
+
     }
 
    void displayHealth()

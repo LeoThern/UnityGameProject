@@ -213,12 +213,12 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("DoesWeakAttack", false);
             weakAttackTimer = weakAttackTimerDecrease;
         }
-        if (onGround && !isAttacking && !doesEvade && weakAttackPressed)
+        if (onGround && !isAttacking && !doesEvade && weakAttackPressed && healthAndStamina.checkAndConsumeStamina(weakAttackCost))
         {
             doesWeakAttack = true;
             animator.SetBool("DoesWeakAttack", true);
             weakAttackTimer = weakAttackTimerDecrease;
-            healthAndStamina.consumeStamina(weakAttackCost);
+            
         }
     }
 
