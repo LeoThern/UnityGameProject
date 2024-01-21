@@ -106,18 +106,6 @@ public class PlayerMovement : MonoBehaviour
         onGround = newOnGround;
     }
 
-    private void CheckFlip()
-    {
-        if (doesStrongAttack) return;
-        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
-        {
-            isFacingRight = !isFacingRight;
-            Vector3 localScale = transform.localScale;
-            localScale.x *= -1f;
-            transform.localScale = localScale;
-        }
-    }
-
     private void CheckJump()
     {
         if (doesStrongAttack) return;
@@ -137,6 +125,29 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("IsJumping", false);
             animator.SetBool("IsFalling", true);
         }
+    }
+
+    public void OnLanding()
+    {
+        animator.SetBool("IsJumping", false);
+        animator.SetBool("IsFalling", false);
+    }
+
+    private void CheckFlip()
+    {
+        if (doesStrongAttack) return;
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
+    }
+
+    private float HorizontalDirection()
+    {
+        return isFacingRight ? 1f : -1f;
     }
 
     private bool DoesWeakAttackAnimation()
@@ -177,12 +188,6 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("DoesStrongAttack", false);
     }
 
-    public void OnLanding()
-    {
-        animator.SetBool("IsJumping", false);
-        animator.SetBool("IsFalling", false);
-    }
-
     private void CheckEvade()
     {
         if (onGround && !doesEvade && dodgePressed && healthAndStamina.checkAndConsumeStamina(evadeCost)){
@@ -197,10 +202,5 @@ public class PlayerMovement : MonoBehaviour
     {
         doesEvade = false;
         animator.SetBool("IsEvading", false);
-    }
-
-    private float HorizontalDirection()
-    {
-        return isFacingRight ? 1f : -1f;
     }
 }
