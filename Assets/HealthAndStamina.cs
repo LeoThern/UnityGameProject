@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Health : MonoBehaviour
+public class HealthAndStamina : MonoBehaviour
 {
     // Start is called before the first frame update
     public float health;
@@ -19,7 +19,7 @@ public class Health : MonoBehaviour
 
     public Slider staminaBar;
 
-    public float getStamina = 1.0f;
+    public float getStamina = 5.0f;
 
     private void Start()
     {
@@ -75,7 +75,21 @@ public class Health : MonoBehaviour
     void displayStamina()
     {
         staminaBar.value = stamina;
+    } 
+
+    public bool checkAndConsumeStamina(float requiredStamina)
+    {
+        if(stamina > requiredStamina)
+        {
+            stamina -= requiredStamina;
+            return true;
+        }
+        return false;
+    }
+    public void consumeStamina(float stamina)
+    {
+            stamina -= stamina;  
     }
 
- 
+
 }

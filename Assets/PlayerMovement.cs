@@ -15,6 +15,21 @@ public class PlayerMovement : MonoBehaviour
     private bool doesEvade = false;
     private Vector2 movementInput = Vector2.zero;
 
+    public HealthAndStamina healthAndStamina;
+    /**
+     * Usage:
+     * healthAndStamina.checkAndConsumeStamina(20f)
+     * 
+     * returns true if there is enough Stanima
+     * and if there is enough it automaticaly consumes the amount of stamina 
+     */
+
+    public float jumpingCost = 20f;
+    public float evadeCost = 10f;
+    public float weakAttackCost = 3f;
+    public float strongAttackCost = 40f;
+
+    [SerializeField] public bool playerId = false;
     [SerializeField] private float jumpingPower = 8f;
     [SerializeField] private float speed = 3f;
     [SerializeField][Range(0, 1)] float lerpConstant;
@@ -45,10 +60,6 @@ public class PlayerMovement : MonoBehaviour
     {
         movementInput = context.ReadValue<Vector2>();
         horizontal = movementInput.x;
-    }
-    public void OnJump(InputAction.CallbackContext context)
-    {
-        jumpPressed = context.action.triggered;
     }
 
     private void FixedUpdate()
@@ -86,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
     private void CheckJump()
     {
         if (doesStrongAttack) return;
-        if (jumpPressed && onGround)
+        if (jumpPressed && onGround && healthAndStamina.checkAndConsumeStamina(jumpingCost))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             animator.SetBool("IsJumping", true);
@@ -102,6 +113,12 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("IsJumping", false);
             animator.SetBool("IsFalling", true);
         }
+    }
+
+    private bool DoesWeakAttackAnimation()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Idle_Weak_Attack")
+            || animator.GetCurrentAnimatorStateInfo(0).IsName("Player_Running_Weak_Attack");
     }
 
     private void CheckWeakAttack()
@@ -144,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckEvade()
     {
-        if (onGround && !doesEvade && Input.GetButtonDown("Dodge")){
+        if (onGround && !doesEvade && Input.GetButtonDown("Dodge") && healthAndStamina.checkAndConsumeStamina(evadeCost)){
             print("dodge");
             doesEvade = true;
             animator.SetBool("IsEvading", true);
