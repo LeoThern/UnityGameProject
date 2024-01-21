@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
     private bool isFacingRight = true;
+    private bool isJumping = false;
     private bool onGround = false;
     private bool doesWeakAttack = false;
     private bool doesStrongAttack = false;
@@ -78,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && onGround)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            isJumping = true;
             animator.SetBool("IsJumping", true);
         }
 
@@ -86,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.7f);
         }
 
-        if (!onGround && rb.velocity.y < -0.01f)
+        if (!onGround && rb.velocity.y < 0f)
         {
             animator.SetBool("IsJumping", false);
             animator.SetBool("IsFalling", true);
@@ -133,6 +135,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnLanding()
     {
+        animator.SetBool("IsJumping", false);
         animator.SetBool("IsFalling", false);
     }
 
