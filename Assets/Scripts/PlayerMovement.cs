@@ -73,7 +73,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnWeakAttack(InputAction.CallbackContext context)
     {
-        weakAttackPressed = context.action.triggered;
+        if (context.performed) // the key has been pressed
+        {
+            weakAttackPressed = !weakAttackPressed;
+        }
     }
 
     public void OnStrongAttack(InputAction.CallbackContext context)
