@@ -228,6 +228,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2fc1953586f71b46849b772889c305d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentScene: 0
+  test: 0
+  scoreFirstPlayer: 0
+  scoreSecondPlayer: 0
+  winBanner: {fileID: 0}
+  Blue: {fileID: 0}
+  Orange: {fileID: 0}
 --- !u!1 &301912624
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,7 +533,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Fremdeigentum
+  m_text: "Third-party \n(Pixel Art)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -951,7 +958,7 @@ GameObject:
   - component: {fileID: 1089840767}
   - component: {fileID: 1089840766}
   m_Layer: 5
-  m_Name: Namen
+  m_Name: Namen Entwickler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -996,11 +1003,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'LEO THERN
+  m_text: 'Leo Thern
 
-    JOHN KLEIN
+    John Klein
 
-    KRISTIAN REHN'
+    Kristian Rehn'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1134,7 +1141,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Entwickler
+  m_text: Developer
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1357,7 +1364,7 @@ GameObject:
   - component: {fileID: 1609083425}
   - component: {fileID: 1609083424}
   m_Layer: 5
-  m_Name: Quellen
+  m_Name: Namen Fremdeigentum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1402,11 +1409,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'LEO THERN
+  m_text: '
 
-    JOHN KLEIN
+    opengameart.org :
 
-    KRISTIAN REHN'
+    Blackwolfdave
+
+    Sharm
+
+    Angel
+
+    greggman'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1597,7 +1610,7 @@ GameObject:
   - component: {fileID: 1815218437}
   - component: {fileID: 1815218436}
   m_Layer: 5
-  m_Name: Namen (1)
+  m_Name: Namen Designer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1642,11 +1655,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'LEO THERN
+  m_text: 'Leo Thern
 
-    JOHN KLEIN
+    John Klein
 
-    KRISTIAN REHN'
+    Kristian Rehn'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
