@@ -925,6 +925,18 @@ PrefabInstance:
       propertyPath: ownHurtbox
       value: 
       objectReference: {fileID: 7445751532797799813}
+    - target: {fileID: 6720152135242494412, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+      propertyPath: m_Color.b
+      value: 0.96862745
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720152135242494412, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+      propertyPath: m_Color.g
+      value: 0.19607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720152135242494412, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+      propertyPath: m_Color.r
+      value: 0.11372549
+      objectReference: {fileID: 0}
     - target: {fileID: 6919741997795170076, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
       propertyPath: m_DefaultControlScheme
       value: Controller

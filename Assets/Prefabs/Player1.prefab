@@ -933,6 +933,18 @@ PrefabInstance:
       propertyPath: groundCheck
       value: 
       objectReference: {fileID: 5201479595936698637}
+    - target: {fileID: 6720152135242494412, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+      propertyPath: m_Color.b
+      value: 0.08627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720152135242494412, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+      propertyPath: m_Color.g
+      value: 0.50980395
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720152135242494412, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+      propertyPath: m_Color.r
+      value: 0.9607843
+      objectReference: {fileID: 0}
     - target: {fileID: 8346534007947542514, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
       propertyPath: health
       value: 0
