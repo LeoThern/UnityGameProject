@@ -50,11 +50,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private BoxCollider2D enemyHurtbox;
     [SerializeField] private CircleCollider2D ownHitbox;
     [SerializeField] private BoxCollider2D ownHurtbox;
+    [SerializeField] private PlayerMovement enemyMovement;
 
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -226,9 +226,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckHit()
     {
-        if (ownHurtbox.IsTouching(enemyHitbox))
-        {
 
+        if (IsAttacking() && !enemyMovement.IsDodging() && enemyHitbox.IsTouching(ownHitbox))
+        {
+            print("hit!");
         }
     }
 
@@ -236,5 +237,15 @@ public class PlayerMovement : MonoBehaviour
     {
         doesEvade = false;
         animator.SetBool("IsEvading", false);
+    }
+
+    public bool IsAttacking()
+    {
+        return doesWeakAttack || doesStrongAttack;
+    }
+
+    public bool IsDodging()
+    {
+        return doesEvade;
     }
 }
