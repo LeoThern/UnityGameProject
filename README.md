@@ -19,7 +19,7 @@ The combat controls for the keyboard are:
 - **North** strong attack  
 - **East** dodge  
 
-### Team Members:  
-- Kristian Rehn ()  
-- John Klein ()  
+## Team Members:  
+- Kristian Rehn (10043938)  
+- John Klein (10044346)  
 - Leo Thern (10044099)  
