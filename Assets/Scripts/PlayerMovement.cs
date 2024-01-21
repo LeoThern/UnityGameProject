@@ -6,9 +6,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //inputs
     private float horizontal;
-    private bool isFacingRight = true;
     private bool jumpPressed = false;
+    private bool weakAttackPressed = false;
+    private bool strongAttackPressed = false;
+    private bool dodgePressed = false;
+
+    private bool isFacingRight = true;
     private bool onGround = false;
     private bool doesWeakAttack = false;
     private bool doesStrongAttack = false;
@@ -24,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
      * and if there is enough it automaticaly consumes the amount of stamina 
      */
 
-    public float jumpingCost = 20f;
     public float evadeCost = 10f;
     public float weakAttackCost = 3f;
     public float strongAttackCost = 40f;
@@ -67,6 +71,21 @@ public class PlayerMovement : MonoBehaviour
         jumpPressed = context.action.triggered;
     }
 
+    public void OnWeakAttack(InputAction.CallbackContext context)
+    {
+        weakAttackPressed = context.action.triggered;
+    }
+
+    public void OnStrongAttack(InputAction.CallbackContext context)
+    {
+        strongAttackPressed = context.action.triggered;
+    }
+
+    public void OnDodge(InputAction.CallbackContext context)
+    {
+        dodgePressed = context.action.triggered;
+    }
+
     private void FixedUpdate()
     {
         horizontal = doesStrongAttack ? 0f : horizontal;
@@ -102,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
     private void CheckJump()
     {
         if (doesStrongAttack) return;
-        if (jumpPressed && onGround && healthAndStamina.checkAndConsumeStamina(jumpingCost))
+        if (jumpPressed && onGround)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             animator.SetBool("IsJumping", true);
@@ -130,12 +149,12 @@ public class PlayerMovement : MonoBehaviour
     {
         bool isAttacking = doesWeakAttack || doesStrongAttack;
 
-        if (doesWeakAttack && Input.GetButtonUp("Weak Attack"))
+        if (doesWeakAttack && !weakAttackPressed)
         {
             doesWeakAttack = false;
             animator.SetBool("DoesWeakAttack", false);
         }
-        if (onGround && !isAttacking && !doesEvade && Input.GetButtonDown("Weak Attack"))
+        if (onGround && !isAttacking && !doesEvade && weakAttackPressed)
         {
             doesWeakAttack = true;
             animator.SetBool("DoesWeakAttack", true);
@@ -144,7 +163,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckStrongAttack()
     {
-        if (onGround && !doesEvade && !doesStrongAttack && Input.GetButtonDown("Strong Attack"))
+        if (onGround && !doesEvade && !doesStrongAttack && strongAttackPressed)
         {
             doesStrongAttack = true;
             animator.SetBool("DoesStrongAttack", true);
@@ -166,7 +185,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckEvade()
     {
-        if (onGround && !doesEvade && Input.GetButtonDown("Dodge") && healthAndStamina.checkAndConsumeStamina(evadeCost)){
+        if (onGround && !doesEvade && dodgePressed && healthAndStamina.checkAndConsumeStamina(evadeCost)){
             print("dodge");
             doesEvade = true;
             animator.SetBool("IsEvading", true);
