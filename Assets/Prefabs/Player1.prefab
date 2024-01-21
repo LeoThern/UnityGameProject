@@ -922,6 +922,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6220842143789369620, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+      propertyPath: ownHitbox
+      value: 
+      objectReference: {fileID: 4973229872058326775}
+    - target: {fileID: 6220842143789369620, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+      propertyPath: ownHurtbox
+      value: 
+      objectReference: {fileID: 4769647405590548514}
+    - target: {fileID: 6220842143789369620, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
       propertyPath: groundCheck
       value: 
       objectReference: {fileID: 5201479595936698637}
@@ -993,6 +1001,16 @@ PrefabInstance:
       addedObject: {fileID: 1988555737025973404}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+--- !u!61 &4769647405590548514 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 3418075654084356984, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+  m_PrefabInstance: {fileID: 7880807565201603418}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &4973229872058326775 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 2907696440545945005, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+  m_PrefabInstance: {fileID: 7880807565201603418}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5201479595936698637 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2697971305746180695, guid: c6a8093ceee0629438c91de689d3177d, type: 3}

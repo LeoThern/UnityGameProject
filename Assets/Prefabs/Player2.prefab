@@ -917,6 +917,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6220842143789369620, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+      propertyPath: ownHitbox
+      value: 
+      objectReference: {fileID: 6945070292998349648}
+    - target: {fileID: 6220842143789369620, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+      propertyPath: ownHurtbox
+      value: 
+      objectReference: {fileID: 7445751532797799813}
     - target: {fileID: 6919741997795170076, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
       propertyPath: m_DefaultControlScheme
       value: Controller
@@ -981,6 +989,16 @@ PrefabInstance:
       addedObject: {fileID: 1029649982247666596}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+--- !u!58 &6945070292998349648 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 2907696440545945005, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+  m_PrefabInstance: {fileID: 5205015629641303805}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &7445751532797799813 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 3418075654084356984, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
+  m_PrefabInstance: {fileID: 5205015629641303805}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7875371575402491050 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2697971305746180695, guid: c6a8093ceee0629438c91de689d3177d, type: 3}
