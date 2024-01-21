@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 movementInput = Vector2.zero;
     private float jumpTime = 0f;
 
+    public float invisibilityTimer = 0f;
+
+    private Vector2 hitImpulse = new Vector2(50f, 3f);
+
     public HealthAndStamina healthAndStamina;
     /**
      * Usage:
@@ -40,26 +44,29 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dodgeAcceleration = 4f;
     [SerializeField] private float speed = 3f;
     [SerializeField][Range(0, 1)] float lerpConstant;
+    [SerializeField] private float hitInvisibility = 1f;
 
-    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] public Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask deathLayer;
     [SerializeField] private Animator animator;
 
     [SerializeField] private CircleCollider2D enemyHitbox;
     [SerializeField] private BoxCollider2D enemyHurtbox;
     [SerializeField] private CircleCollider2D ownHitbox;
     [SerializeField] private BoxCollider2D ownHurtbox;
+    [SerializeField] private PlayerMovement enemyMovement;
 
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
+        CheckFellDown();
         CheckOnGround();
         CheckJump();
         CheckFlip();
@@ -109,6 +116,19 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
+
+    private bool FellDown()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, deathLayer);
+    }
+
+    private void CheckFellDown()
+    {
+        if (FellDown())
+        {
+            healthAndStamina.decreaseHealth(6);
+        }
     }
 
     private void CheckOnGround()
@@ -226,9 +246,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckHit()
     {
-        if (ownHurtbox.IsTouching(enemyHitbox))
+        if (invisibilityTimer > 0)
         {
+            invisibilityTimer -= Time.deltaTime;
+        }
 
+        if (IsAttacking() && !enemyMovement.IsInvisible() && enemyHitbox.IsTouching(ownHitbox))
+        {
+            float direction = rb.position.x < enemyMovement.GetPosition().x ? 1f : -1f;
+            float attackMultiplier = doesStrongAttack ? 1f : 0.5f;
+            enemyMovement.rb.AddForce(new Vector2(direction * hitImpulse.x * attackMultiplier,
+                hitImpulse.y * attackMultiplier), ForceMode2D.Impulse);
+            enemyMovement.invisibilityTimer = hitInvisibility;
+            enemyMovement.DecreaseHealth(attackMultiplier);
         }
     }
 
@@ -236,5 +266,25 @@ public class PlayerMovement : MonoBehaviour
     {
         doesEvade = false;
         animator.SetBool("IsEvading", false);
+    }
+
+    public bool IsAttacking()
+    {
+        return doesWeakAttack || doesStrongAttack;
+    }
+
+    public bool IsInvisible()
+    {
+        return doesEvade || invisibilityTimer > 0;
+    }
+
+    public Vector2 GetPosition()
+    {
+        return rb.position;
+    }
+
+    public void DecreaseHealth(float health)
+    {
+        healthAndStamina.decreaseHealth(health);
     }
 }
