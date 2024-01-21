@@ -78,16 +78,17 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnStrongAttack(InputAction.CallbackContext context)
     {
-        strongAttackPressed = context.action.triggered;
+        strongAttackPressed = context.ReadValueAsButton();
     }
 
     public void OnDodge(InputAction.CallbackContext context)
     {
-        dodgePressed = context.action.triggered;
+        dodgePressed = context.ReadValueAsButton();
     }
 
     private void FixedUpdate()
     {
+        horizontal = movementInput.x;
         horizontal = doesStrongAttack ? 0f : horizontal;
         Vector2 movement = new Vector2(speed * horizontal, rb.velocity.y);
         rb.velocity = Vector2.Lerp(rb.velocity, movement, lerpConstant);
@@ -190,7 +191,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckEvade()
     {
-        if (onGround && !doesEvade && dodgePressed && healthAndStamina.checkAndConsumeStamina(evadeCost)){
+        if (onGround && !doesEvade && dodgePressed && healthAndStamina.checkAndConsumeStamina(evadeCost))
+        {
             print("dodge");
             doesEvade = true;
             animator.SetBool("IsEvading", true);
