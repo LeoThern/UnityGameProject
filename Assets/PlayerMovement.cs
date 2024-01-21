@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
     private bool isFacingRight = true;
-    private bool isJumping = false;
+    private bool jumpPressed = false;
     private bool onGround = false;
     private bool doesWeakAttack = false;
     private bool doesStrongAttack = false;
@@ -68,10 +68,6 @@ public class PlayerMovement : MonoBehaviour
         Vector2 movement = new Vector2(speed * horizontal, rb.velocity.y);
         rb.velocity = Vector2.Lerp(rb.velocity, movement, lerpConstant);
         animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
-        if (doesWeakAttack)
-        {
-            healthAndStamina.consumeStamina(20f);
-        }
     }
 
     private bool IsGrounded()
@@ -101,15 +97,13 @@ public class PlayerMovement : MonoBehaviour
     private void CheckJump()
     {
         if (doesStrongAttack) return;
-        if (Input.GetButtonDown("Jump") && onGround && healthAndStamina.checkAndConsumeStamina(jumpingCost))
+        if (jumpPressed && onGround && healthAndStamina.checkAndConsumeStamina(jumpingCost))
         {
-
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-            isJumping = true;
             animator.SetBool("IsJumping", true);
         }
 
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+        if (!jumpPressed && rb.velocity.y > 0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.7f);
         }
@@ -136,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
             doesWeakAttack = false;
             animator.SetBool("DoesWeakAttack", false);
         }
-        if (onGround && !isAttacking && Input.GetButtonDown("Weak Attack"))
+        if (onGround && !isAttacking && !doesEvade && Input.GetButtonDown("Weak Attack"))
         {
             doesWeakAttack = true;
             animator.SetBool("DoesWeakAttack", true);
@@ -145,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckStrongAttack()
     {
-        if (onGround && !doesStrongAttack && Input.GetButtonDown("Strong Attack") && healthAndStamina.checkAndConsumeStamina(strongAttackCost))
+        if (onGround && !doesEvade && !doesStrongAttack && Input.GetButtonDown("Strong Attack"))
         {
             doesStrongAttack = true;
             animator.SetBool("DoesStrongAttack", true);
@@ -154,9 +148,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnStrongAttackFinished()
     {
+        rb.position += new Vector2(HorizontalDirection() * 0.3f, 0f);
         doesStrongAttack = false;
         animator.SetBool("DoesStrongAttack", false);
-        rb.position += new Vector2(HorizontalDirection() * 0.3f, 0f);
     }
 
     public void OnLanding()
@@ -167,11 +161,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckEvade()
     {
-        if (onGround && !doesEvade && Input.GetButtonDown("Dodge") && healthAndStamina.checkAndConsumeStamina(evadeCost))
-        {
+        if (onGround && !doesEvade && Input.GetButtonDown("Dodge") && healthAndStamina.checkAndConsumeStamina(evadeCost)){
+            print("dodge");
             doesEvade = true;
             animator.SetBool("IsEvading", true);
-            
+            rb.position -= new Vector2(HorizontalDirection() * 1f, 0f);
         }
     }
 
