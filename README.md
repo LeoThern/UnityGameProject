@@ -7,7 +7,7 @@
 Over the course of three exciting stages you will battle till death, there can be only one champion!
 
 Player one, Orange, is controlled using the keyboard.  
-Player two, Blue, is controlled using the controller.  
+Player two, Blue, is controlled using a gamepad.  
 Each player can move using A/D or the Joystick respectively.  
 Additionaly the players can jump, strike with a light or heavy attack and dodge incoming attacks.  
 
@@ -16,7 +16,7 @@ The combat controls for the keyboard are:
 - **K** strong attack  
 - **L** dodge  
 
-The combat controls for the keyboard are:  
+The combat controls for the gamepad are:  
 - **West** light attack  
 - **North** strong attack  
 - **East** dodge  
