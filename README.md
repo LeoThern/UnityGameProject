@@ -1,5 +1,7 @@
 # Blue vs. Orange: The Game
 
+![FinalStagePreview](https://github.com/LeoThern/UnityGameProject/blob/main/preview.png)  
+
 ### Tutorial:
 **Blue vs. Orange: The Game** is a fantastic 1vs1 duel between two players. 
 Over the course of three exciting stages you will battle till death, there can be only one champion!
